@@ -1,0 +1,1 @@
+CREATE DATABASE [locker_kmitl20230401] COLLATE Latin1_General_100_CI_AI_SC_UTF8;
