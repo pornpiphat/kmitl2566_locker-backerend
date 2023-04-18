@@ -27,7 +27,6 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
-
         createdAt: {
             type: DataTypes.DATE,
         },
@@ -43,7 +42,7 @@ module.exports = (sequelize, Sequelize) => {
     }, {
         sequelize,
         modelName: 'student',
-        timestamps: true
+        timestamps: false
     });
     return Student;
 };

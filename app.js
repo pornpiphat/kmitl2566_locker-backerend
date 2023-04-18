@@ -20,7 +20,7 @@ app.post("/", (req, res) => {
 app.use('/student', require('./routes/student'));
 app.use('/locker', require('./routes/locker'));
 app.use('/professor', require('./routes/professor'));
-
+app.use('/admin', require('./routes/admin'));
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
         console.log("Starting node.js at port " + port);

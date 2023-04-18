@@ -23,16 +23,25 @@ router.get('/', async (req, res,) => {
     return res.status(200).json(info);
 });
 
+
+
+router.get('/overused', async (req, res,) => {
+    const [results, metadata] = await db.sequelize.query('SELECT * from [lockers_overused];');
+    return res.status(200).json(results);
+});
+
 router.post('/submit-locker', async (req, res) => {
     const studentId = req.body.studentId;
     const lockerId = req.body.lockerId;
     const student = await db.student.findOne({
-        where: { id: studentId }
+        where: {
+            id: studentId,
+            active: 1,
+            deleted: 0,
+        }
     });
 
-
     if (!student) {
-
         return res.json(
             {
                 status: 404,
