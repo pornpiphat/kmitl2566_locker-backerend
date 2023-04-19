@@ -30,6 +30,34 @@ router.get('/overused', async (req, res,) => {
     return res.status(200).json(results);
 });
 
+
+router.post('/reply-overused', async (req, res,) => {
+    const studentId = req.body.studentId;
+    const sql = `SELECT * from [lockers_overused] where studentId = ${studentId};`;
+    const [results, metadata] = await db.sequelize.query(sql);
+    if (!results.length) {
+        return res.json(
+            {
+                status: 404,
+                message: 'Student Not Found'
+            }
+        );
+    }
+    await db.student_lockers.destroy({
+        where: { studentId: studentId }
+    })
+    await db.locker.update(
+        { status: 1 },
+        { where: { id: results[0].lockerId } }
+    )
+    const responseMap = {
+        status: 200,
+        message: "Reply Locker successfully",
+    }
+    return res.status(200).json(responseMap);
+
+});
+
 router.post('/submit-locker', async (req, res) => {
     const studentId = req.body.studentId;
     const lockerId = req.body.lockerId;
